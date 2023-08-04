@@ -45,6 +45,7 @@ class Autoload extends AutoloadConfig
     public $psr4 = [
         APP_NAMESPACE => APPPATH, // For custom app namespace
         'Config'      => APPPATH . 'Config',
+        'App\Models'  => APPPATH . 'Models', // Add this line for your model
     ];
 
     /**
@@ -91,10 +92,11 @@ class Autoload extends AutoloadConfig
      * Prototype:
      *   $helpers = [
      *       'form',
+     *       'url'
      *   ];
      *
      * @var string[]
      * @phpstan-var list<string>
      */
-    public $helpers = [];
+    public $helpers = ['form', 'url'];
 }

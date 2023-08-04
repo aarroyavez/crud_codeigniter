@@ -1,19 +1,23 @@
 <?php
-// Archivo: application/controllers/Operaciones.php
 
-class Operaciones extends CI_Controller {
-    public function index() {
-        // Cargar la vista 'operaciones_view'
-        $this->load->view('operaciones_view');
+namespace App\Controllers;
+
+use CodeIgniter\Controller;
+use App\Models\Operaciones_model;
+
+class Operaciones extends Controller
+{
+    public function index()
+    {
+        return view('formulario_operacion');
     }
 
-    public function guardar_operacion() {
-        // Obtener los datos del formulario
-        $numero1 = $this->input->post('numero1');
-        $numero2 = $this->input->post('numero2');
-        $operacion = $this->input->post('operacion');
+    public function guardar_operacion()
+    {
+        $numero1 = $this->request->getPost('numero1');
+        $numero2 = $this->request->getPost('numero2');
+        $operacion = $this->request->getPost('operacion');
 
-        // Realizar la operación matemática
         switch ($operacion) {
             case 'suma':
                 $resultado = $numero1 + $numero2;
@@ -28,14 +32,19 @@ class Operaciones extends CI_Controller {
                 $resultado = $numero1 / $numero2;
                 break;
             default:
-                $resultado = 'Operación no válida';
+                $resultado = 0;
         }
 
-        // Cargar el modelo 'Operaciones_model' y guardar los datos en la base de datos
-        $this->load->model('Operaciones_model');
-        $this->Operaciones_model->guardar_operacion($numero1, $numero2, $operacion, $resultado);
+        $datos = [
+            'numero1' => $numero1,
+            'numero2' => $numero2,
+            'operacion' => $operacion,
+            'resultado' => $resultado
+        ];
 
-        // Redirigir al inicio
-        redirect('Operaciones');
+        $model = new Operaciones_model();
+        $model->insert($datos);
+
+        return redirect()->to(site_url('operaciones'));
     }
 }

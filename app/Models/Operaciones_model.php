@@ -1,23 +1,12 @@
 <?php
-// Archivo: application/models/Operaciones_model.php
 
-class Operaciones_model extends CI_Model {
-    public function guardar_operacion($numero1, $numero2, $operacion, $resultado) {
-        // Crear un arreglo con los datos a insertar
-        $data = array(
-            'numero1' => $numero1,
-            'numero2' => $numero2,
-            'operacion' => $operacion,
-            'resultado' => $resultado
-        );
+namespace App\Models;
 
-        // Insertar los datos en la tabla 'operaciones'
-        $this->db->insert('operaciones', $data);
-    }
+use CodeIgniter\Model;
 
-    public function get_operaciones() {
-        // Obtener todos los registros de la tabla 'operaciones'
-        $query = $this->db->get('operaciones');
-        return $query->result();
-    }
+class Operaciones_model extends Model
+{
+    protected $table = 'operaciones';
+    protected $primaryKey = 'id';
+    protected $allowedFields = ['numero1', 'numero2', 'operacion', 'resultado'];
 }
