@@ -29,6 +29,8 @@ $routes->get('/', 'Home::index');
 // Nueva ruta para el formulario de operaciones y su inserción en la base de datos
 $routes->match(['get', 'post'], 'operaciones', 'Operaciones::index');
 
+$routes->get('ver_operaciones', 'Operaciones::ver_operaciones');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

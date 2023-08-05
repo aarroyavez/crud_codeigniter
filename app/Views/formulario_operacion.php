@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Operaciones Matemáticas</h1>
-    <form action="<?php echo site_url('operaciones/guardar_operacion'); ?>" method="post">
+    <form action="" method="post">
         <label for="numero1">Número 1:</label>
         <input type="number" name="numero1" required><br>
         
@@ -22,5 +22,9 @@
 
         <input type="submit" value="Calcular">
     </form>
+
+    <?php if (isset($resultado)): ?>
+        <p>Resultado: <?= $resultado ?></p>
+    <?php endif; ?>
 </body>
 </html>
