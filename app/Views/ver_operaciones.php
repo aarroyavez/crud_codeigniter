@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ver Operaciones</title>
+    <title>Operaciones Guardadas</title>
 </head>
 <body>
-    <h1>Operaciones Registradas</h1>
-    <table>
+    <h1>Operaciones Guardadas</h1>
+    <table border="1">
         <tr>
-            <th>ID</th>
             <th>Número 1</th>
             <th>Número 2</th>
             <th>Operación</th>
             <th>Resultado</th>
         </tr>
-        <?php foreach ($registros as $registro): ?>
-            <tr>
-                <td><?= $registro['id'] ?></td>
-                <td><?= $registro['numero1'] ?></td>
-                <td><?= $registro['numero2'] ?></td>
-                <td><?= $registro['operacion'] ?></td>
-                <td><?= $registro['resultado'] ?></td>
-            </tr>
+        <?php foreach ($operaciones as $operacion): ?>
+        <tr>
+            <td><?php echo $operacion['numero1']; ?></td>
+            <td><?php echo $operacion['numero2']; ?></td>
+            <td><?php echo $operacion['operacion']; ?></td>
+            <td><?php echo $operacion['resultado']; ?></td>
+        </tr>
         <?php endforeach; ?>
     </table>
 </body>
