@@ -9,14 +9,44 @@ class Operaciones extends Controller
 {
     public function index()
     {
-        return view('formulario_operacion');
+        if ($this->request->getMethod() === 'post') {
+            $numero1 = $this->request->getPost('numero1');
+            $numero2 = $this->request->getPost('numero2');
+            $operacion = $this->request->getPost('operacion');
+            $resultado = $this->calcularResultado($numero1, $numero2, $operacion);
+        } else {
+            $resultado = null;
+        }
+
+        $data = [
+            'resultado' => $resultado
+        ];
+
+        return view('formulario_operacion', $data);
     }
 
     public function ver_operaciones()
     {
-        $model = new Operaciones_model();
-        $data['operaciones'] = $model->findAll();
-        return view('ver_operaciones', $data);
+        $operacionesModel = new Operaciones_model();
+        $data['operaciones'] = $operacionesModel->findAll();
+
+        return view('ver_operaciones', $data); // Cargamos la vista ver_operaciones.php
+    }
+
+    private function calcularResultado($numero1, $numero2, $operacion)
+    {
+        switch ($operacion) {
+            case 'suma':
+                return $numero1 + $numero2;
+            case 'resta':
+                return $numero1 - $numero2;
+            case 'multiplicacion':
+                return $numero1 * $numero2;
+            case 'division':
+                return $numero1 / $numero2;
+            default:
+                return 0;
+        }
     }
 
     public function guardar_operacion()
@@ -24,23 +54,7 @@ class Operaciones extends Controller
         $numero1 = $this->request->getPost('numero1');
         $numero2 = $this->request->getPost('numero2');
         $operacion = $this->request->getPost('operacion');
-
-        switch ($operacion) {
-            case 'suma':
-                $resultado = $numero1 + $numero2;
-                break;
-            case 'resta':
-                $resultado = $numero1 - $numero2;
-                break;
-            case 'multiplicacion':
-                $resultado = $numero1 * $numero2;
-                break;
-            case 'division':
-                $resultado = $numero1 / $numero2;
-                break;
-            default:
-                $resultado = 0;
-        }
+        $resultado = $this->calcularResultado($numero1, $numero2, $operacion);
 
         $datos = [
             'numero1' => $numero1,
@@ -49,9 +63,11 @@ class Operaciones extends Controller
             'resultado' => $resultado
         ];
 
-        $model = new Operaciones_model();
-        $model->insert($datos);
+        $operacionesModel = new Operaciones_model();
+        $operacionesModel->insert($datos);
 
-        return redirect()->to(site_url('operaciones/ver_operaciones'));
+        return redirect()->to(site_url('operaciones'))->with('success', 'Operación guardada exitosamente.');
     }
+
+    
 }

@@ -30,7 +30,8 @@ $routes->get('/', 'Home::index');
 $routes->match(['get', 'post'], 'operaciones', 'Operaciones::index');
 
 $routes->get('ver_operaciones', 'Operaciones::ver_operaciones');
-$routes->post('operaciones/guardar_operacion', 'Operaciones::guardar_operacion');
+// $routes->post('operaciones/guardar_operacion', 'Operaciones::guardar_operacion');
+
 
 
 /*
